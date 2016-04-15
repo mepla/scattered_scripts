@@ -44,25 +44,20 @@ class Gear(object):
             # print('Could not parse div: {}\n\n'.format(div))
             pass
 
+
 def search_afrang():
     results = {}
 
-    fujinon_result = requests.get('http://www.afrangdigital.com/AjaxSearchUsed.aspx?Query=fujinon')
-    xf55_200_result = requests.get('http://www.afrangdigital.com/AjaxSearchUsed.aspx?Query=xf55')
-    fujinon_soup = bs4.BeautifulSoup(fujinon_result.content, 'html.parser')
-    xf55_200_soup = bs4.BeautifulSoup(xf55_200_result.content, 'html.parser')
+    search_queries = ['fujinon', 'xf 5', 'xf 1', 'xf 6', 'xf 9']
 
-    fujinon_all_divs = fujinon_soup.find_all('div')
-    for div in fujinon_all_divs:
-        g = Gear.gear_with_div(div)
-        if g and g.link not in results:
-            results[g.link] = g
-
-    xf55_200_all_divs = xf55_200_soup.find_all('div')
-    for div in xf55_200_all_divs:
-        g = Gear.gear_with_div(div)
-        if g and g.link not in results:
-            results[g.link] = g
+    for qry in search_queries:
+        result = requests.get('http://www.afrangdigital.com/AjaxSearchUsed.aspx?Query={}'.format(qry))
+        soup = bs4.BeautifulSoup(result.content, 'html.parser')
+        all_divs = soup.find_all('div')
+        for div in all_divs:
+            g = Gear.gear_with_div(div)
+            if g and g.link not in results:
+                results[g.link] = g
 
     for res in results.values():
         print(res)
@@ -70,18 +65,25 @@ def search_afrang():
     compare_to_last_search(results)
     save_as_last_search(results)
 
+
 def compare_to_last_search(results):
     f = open('last_search.json')
     old_results = json.load(f)
 
+    new_ones = []
     for res in results.keys():
         try:
             res = unicode(res)
             if res not in old_results.keys():
-                print('\n\n\n\n\n')
-                print(res)
+                new_ones.append(res)
         except:
             pass
+
+    if len(new_ones) > 0:
+        print('\n\n\n')
+        for new in new_ones:
+            print(new)
+
 
 def save_as_last_search(results):
     assert isinstance(results, dict)
@@ -91,6 +93,7 @@ def save_as_last_search(results):
     f = open('last_search.json', 'w')
     f.write(json.dumps(json_results))
     f.close()
+
 
 def main():
     search_afrang()
