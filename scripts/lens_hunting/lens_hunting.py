@@ -16,7 +16,7 @@ class Gear(object):
 
     def __str__(self):
         price_str = self.price[0:-4]
-        return '{} -- {} -- {}'.format(self.title, self.link, price_str)
+        return '{} -- {} -- {}'.format(self.title, price_str, self.link)
 
     def to_json(self):
         return {'title': self.title, 'link': self.link, 'price': self.price}
