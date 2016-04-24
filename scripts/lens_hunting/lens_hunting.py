@@ -59,8 +59,8 @@ def search_afrang():
             if g and g.link not in results:
                 results[g.link] = g
 
-    for res in results.values():
-        print(res)
+    for i, res in enumerate(results.values()):
+        print('{}. {}'.format(i+1, res))
 
     compare_to_last_search(results)
     save_as_last_search(results)
