@@ -48,7 +48,7 @@ class Gear(object):
 def search_afrang():
     results = {}
 
-    search_queries = ['fujinon', 'xf 5', 'xf 1', 'xf 6', 'xf 9']
+    search_queries = ['fujinon', 'fujifilm', 'xf 5', 'xf 1', 'xf 6', 'xf 9']
 
     for qry in search_queries:
         result = requests.get('http://www.afrangdigital.com/AjaxSearchUsed.aspx?Query={}'.format(qry))
