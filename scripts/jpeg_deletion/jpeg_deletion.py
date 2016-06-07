@@ -4,6 +4,7 @@ import sys
 
 jpeg_exts = ['jpg', 'JPG', 'jpeg', 'JPEG']
 
+
 def delete_jpeg_with_now_raw(path):
     to_be_deleted = []
     for file in os.listdir(path):
@@ -22,6 +23,7 @@ def delete_jpeg_with_now_raw(path):
     print('Deleted {} jpegs: \n'.format(len(to_be_deleted)))
     for x in to_be_deleted:
         print(x)
+
 
 def print_help():
     print '[ERROR] Wrong use, use it like this: \npython jpeg_deletion.py [path_to_image_dir]'
