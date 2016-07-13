@@ -1,3 +1,5 @@
+import argparse
+
 __author__ = 'mepla'
 import os
 import sys
@@ -25,12 +27,17 @@ def delete_jpeg_with_now_raw(path):
         print(x)
 
 
-def print_help():
-    print '[ERROR] Wrong use, use it like this: \npython jpeg_deletion.py [path_to_image_dir]'
-
 if __name__ == '__main__':
-    try:
-        path = sys.argv[1]
-        delete_jpeg_with_now_raw(path)
-    except:
-        print_help()
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument('-p', action="store", dest="path", default=None,
+                        help="Path to directory to delete excessive JPG files.")
+
+    args = parser.parse_args()
+
+    print args.path
+    if args.path:
+        delete_jpeg_with_now_raw(args.path)
+    else:
+        parser.print_help()
+
